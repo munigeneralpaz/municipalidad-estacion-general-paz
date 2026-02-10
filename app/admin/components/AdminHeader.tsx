@@ -22,7 +22,7 @@ import {
 } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '@/state/redux/store';
 import { logoutAsync } from '@/state/redux/auth';
-import { PUBLIC_ROUTES } from '@/constants';
+import { AUTH_ROUTES, PUBLIC_ROUTES } from '@/constants';
 
 type AdminHeaderProps = {
   onMenuClick: () => void;
@@ -47,7 +47,7 @@ const AdminHeader = ({ onMenuClick }: AdminHeaderProps) => {
   const handleLogout = async () => {
     handleClose();
     await dispatch(logoutAsync());
-    router.push(PUBLIC_ROUTES.HOME);
+    router.push(AUTH_ROUTES.LOGIN);
   };
 
   const handleGoToSite = () => {

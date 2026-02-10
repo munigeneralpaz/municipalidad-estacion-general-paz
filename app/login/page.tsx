@@ -14,6 +14,8 @@ import {
   CircularProgress,
   InputAdornment,
   IconButton,
+  Backdrop,
+  Snackbar,
 } from '@mui/material';
 import {
   Visibility as VisibilityIcon,
@@ -41,6 +43,26 @@ const schema = yup.object({
     .required('La contraseña es requerida'),
 });
 
+const getErrorMessage = (message?: string): string => {
+  if (!message) return 'Error al iniciar sesión. Verifica tus credenciales.';
+  const lower = message.toLowerCase();
+  if (lower.includes('invalid login credentials') || lower.includes('invalid_credentials'))
+    return 'Email o contraseña incorrectos.';
+  if (lower.includes('email not confirmed'))
+    return 'El email no ha sido confirmado. Revisá tu bandeja de entrada.';
+  if (lower.includes('too many requests') || lower.includes('rate limit'))
+    return 'Demasiados intentos. Esperá unos minutos antes de reintentar.';
+  if (lower.includes('network') || lower.includes('fetch'))
+    return 'Error de conexión. Verificá tu conexión a internet.';
+  if (lower.includes('user not found'))
+    return 'No existe una cuenta con ese email.';
+  if (lower.includes('email') && lower.includes('required'))
+    return 'El email es requerido.';
+  if (lower.includes('password') && lower.includes('required'))
+    return 'La contraseña es requerida.';
+  return message;
+};
+
 const LoginPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -50,6 +72,7 @@ const LoginPage = () => {
   const redirectTo = searchParams.get('redirect') || ADMIN_ROUTES.ADMIN_DASHBOARD;
 
   const [showPassword, setShowPassword] = useState(false);
+  const [snackOpen, setSnackOpen] = useState(false);
   const { isLocked, remainingSeconds, attemptsLeft, registerAttempt, reset } = useRateLimit();
 
   const {
@@ -70,6 +93,12 @@ const LoginPage = () => {
       router.push(redirectTo);
     }
   }, [isAuthenticated, router, reset, redirectTo]);
+
+  useEffect(() => {
+    if (error) {
+      setSnackOpen(true);
+    }
+  }, [error]);
 
   useEffect(() => {
     return () => {
@@ -147,7 +176,7 @@ const LoginPage = () => {
           {/* Error Alert */}
           {error && !isLocked && (
             <Alert severity="error" sx={{ mb: 3 }}>
-              {errorMessage || 'Error al iniciar sesión. Verifica tus credenciales.'}
+              {getErrorMessage(errorMessage)}
               {attemptsLeft > 0 && attemptsLeft < 3 && (
                 <Typography variant="caption" display="block" sx={{ mt: 0.5 }}>
                   {attemptsLeft} {attemptsLeft === 1 ? 'intento restante' : 'intentos restantes'}
@@ -160,20 +189,24 @@ const LoginPage = () => {
           <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
             <TextField
               {...register('email')}
-              label="Email"
+              label="Correo electrónico"
               type="email"
               fullWidth
               margin="normal"
               error={!!errors.email}
               helperText={errors.email?.message}
               disabled={loading || isLocked}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <EmailIcon color="action" />
-                  </InputAdornment>
-                ),
+              slotProps={{
+                inputLabel: { shrink: true },
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EmailIcon color="action" />
+                    </InputAdornment>
+                  ),
+                },
               }}
+              placeholder="admin@ejemplo.com"
             />
 
             <TextField
@@ -185,24 +218,28 @@ const LoginPage = () => {
               error={!!errors.password}
               helperText={errors.password?.message}
               disabled={loading || isLocked}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <LockIcon color="action" />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={handleTogglePassword}
-                      edge="end"
-                      disabled={loading}
-                    >
-                      {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
+              slotProps={{
+                inputLabel: { shrink: true },
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockIcon color="action" />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={handleTogglePassword}
+                        edge="end"
+                        disabled={loading}
+                      >
+                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
               }}
+              placeholder="Ingresá tu contraseña"
             />
 
             <Button
@@ -233,6 +270,39 @@ const LoginPage = () => {
           </Typography>
         </Paper>
       </Container>
+
+      {/* Loading Backdrop */}
+      <Backdrop
+        open={!!loading}
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          color: '#fff',
+          flexDirection: 'column',
+          gap: 2,
+        }}
+      >
+        <CircularProgress color="inherit" size={48} />
+        <Typography variant="body1" color="inherit">
+          Iniciando sesión...
+        </Typography>
+      </Backdrop>
+
+      {/* Error Snackbar */}
+      <Snackbar
+        open={snackOpen && !!error}
+        autoHideDuration={6000}
+        onClose={() => setSnackOpen(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setSnackOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {getErrorMessage(errorMessage)}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
