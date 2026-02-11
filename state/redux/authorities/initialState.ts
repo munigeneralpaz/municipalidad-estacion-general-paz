@@ -6,6 +6,7 @@ const initialState: AuthoritiesSlice = {
   intendente: null,
   gabinete: [],
   concejo: [],
+  tribunal: [],
   lastFetched: {},
   status: {},
 };

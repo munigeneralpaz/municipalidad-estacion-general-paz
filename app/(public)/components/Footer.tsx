@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Box, Container, Typography, IconButton, Fab } from '@mui/material';
+import { Box, Container, Typography, IconButton } from '@mui/material';
 import {
   Facebook as FacebookIcon,
   Instagram as InstagramIcon,
@@ -11,17 +11,12 @@ import {
   Phone as PhoneIcon,
   Email as EmailIcon,
   LocationOn as LocationOnIcon,
-  KeyboardArrowUp as KeyboardArrowUpIcon,
 } from '@mui/icons-material';
 import { PUBLIC_ROUTES } from '@/constants';
 import classes from './classes';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <>
@@ -134,10 +129,10 @@ const Footer = () => {
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
                 {[
-                  { label: 'Municipalidad', href: PUBLIC_ROUTES.MUNICIPALIDAD },
-                  { label: 'Novedades', href: PUBLIC_ROUTES.NOVEDADES },
-                  { label: 'Servicios', href: PUBLIC_ROUTES.SERVICIOS },
-                  { label: 'Normativa', href: PUBLIC_ROUTES.NORMATIVA },
+                  { label: 'Gobierno', href: PUBLIC_ROUTES.MUNICIPALIDAD },
+                  { label: 'Areas', href: PUBLIC_ROUTES.SERVICIOS },
+                  { label: 'Trámites', href: PUBLIC_ROUTES.SERVICIOS_TRAMITES },
+                  { label: 'Transparencia', href: PUBLIC_ROUTES.NORMATIVA },
                   { label: 'Contacto', href: PUBLIC_ROUTES.CONTACTO },
                 ].map((link) => (
                   <Link key={link.label} href={link.href} style={classes.footerLink}>
@@ -171,14 +166,14 @@ const Footer = () => {
             {/* Servicios */}
             <Box>
               <Typography variant="h6" sx={classes.footerTitle}>
-                Servicios
+                Areas
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
                 {[
                   { label: 'Salud', href: PUBLIC_ROUTES.SERVICIOS_SALUD },
                   { label: 'Cultura', href: PUBLIC_ROUTES.SERVICIOS_CULTURA },
                   { label: 'Deporte', href: PUBLIC_ROUTES.SERVICIOS_DEPORTE },
-                  { label: 'Trámites', href: PUBLIC_ROUTES.SERVICIOS_TRAMITES },
+                  { label: 'Educación', href: PUBLIC_ROUTES.SERVICIOS_EDUCACION },
                 ].map((link) => (
                   <Link key={link.label} href={link.href} style={classes.footerLink}>
                     <Typography
@@ -253,28 +248,6 @@ const Footer = () => {
           </Box>
         </Container>
       </Box>
-
-      {/* Back to Top Button */}
-      <Fab
-        size="small"
-        color="primary"
-        aria-label="Volver arriba"
-        onClick={scrollToTop}
-        sx={{
-          position: 'fixed',
-          bottom: 24,
-          right: 24,
-          zIndex: 1000,
-          opacity: 0.85,
-          transition: 'opacity 0.3s ease, transform 0.3s ease',
-          '&:hover': {
-            opacity: 1,
-            transform: 'scale(1.1)',
-          },
-        }}
-      >
-        <KeyboardArrowUpIcon />
-      </Fab>
     </>
   );
 };

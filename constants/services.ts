@@ -2,7 +2,7 @@ import {
   LocalHospital as LocalHospitalIcon,
   TheaterComedy as TheaterComedyIcon,
   SportsFootball as SportsFootballIcon,
-  Description as DescriptionIcon,
+  School as SchoolIcon,
 } from '@mui/icons-material';
 import { PUBLIC_ROUTES } from './routes';
 
@@ -29,10 +29,10 @@ export const SERVICES = [
     color: '#F5A623',
   },
   {
-    title: 'Trámites',
-    icon: DescriptionIcon,
-    description: 'Realiza tus trámites municipales',
-    href: PUBLIC_ROUTES.SERVICIOS_TRAMITES,
+    title: 'Educación',
+    icon: SchoolIcon,
+    description: 'Programas educativos municipales',
+    href: PUBLIC_ROUTES.SERVICIOS_EDUCACION,
     color: '#1A5F8B',
   },
 ] as const;

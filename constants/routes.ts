@@ -7,23 +7,25 @@ export const PUBLIC_ROUTES = {
   // Inicio
   HOME: '/',
 
-  // Municipalidad
-  MUNICIPALIDAD: '/municipalidad',
-  MUNICIPALIDAD_INTENDENTE: '/municipalidad/intendente',
-  MUNICIPALIDAD_GABINETE: '/municipalidad/gabinete',
-  MUNICIPALIDAD_CONCEJO: '/municipalidad/concejo',
-  MUNICIPALIDAD_HISTORIA: '/municipalidad/historia',
+  // Gobierno
+  MUNICIPALIDAD: '/gobierno',
+  MUNICIPALIDAD_INTENDENTE: '/gobierno/intendente',
+  MUNICIPALIDAD_GABINETE: '/gobierno/gabinete',
+  MUNICIPALIDAD_CONCEJO: '/gobierno/concejo',
+  MUNICIPALIDAD_TRIBUNAL: '/gobierno/tribunal-de-cuentas',
+  MUNICIPALIDAD_HISTORIA: '/gobierno/historia',
 
   // Novedades
   NOVEDADES: '/novedades',
   NOVEDADES_DETALLE: (slug: string) => `/novedades/${slug}`,
 
-  // Servicios
-  SERVICIOS: '/servicios',
-  SERVICIOS_SALUD: '/servicios/salud',
-  SERVICIOS_CULTURA: '/servicios/cultura',
-  SERVICIOS_DEPORTE: '/servicios/deporte',
-  SERVICIOS_TRAMITES: '/servicios/tramites',
+  // Areas (Servicios)
+  SERVICIOS: '/areas',
+  SERVICIOS_SALUD: '/areas/salud',
+  SERVICIOS_CULTURA: '/areas/cultura',
+  SERVICIOS_DEPORTE: '/areas/deporte',
+  SERVICIOS_TRAMITES: '/tramites',
+  SERVICIOS_EDUCACION: '/areas/educacion',
 
   // Normativa
   NORMATIVA: '/normativa',

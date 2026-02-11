@@ -21,6 +21,10 @@ export const NEWS_CATEGORIES: Array<{ value: NewsCategory; label: string }> = [
   { value: 'social', label: 'Desarrollo Social' },
   { value: 'medio-ambiente', label: 'Medio Ambiente' },
   { value: 'seguridad', label: 'Seguridad' },
+  { value: 'recoleccion-residuos', label: 'Recolección de Residuos' },
+  { value: 'servicio-agua', label: 'Servicio de Agua' },
+  { value: 'inmobiliario', label: 'Inmobiliario' },
+  { value: 'registro-civil', label: 'Registro Civil' },
   { value: 'otros', label: 'Otros' },
 ] as const;
 
@@ -54,6 +58,12 @@ export const SERVICE_CATEGORIES: Array<{
     label: 'Trámites',
     icon: 'Description',
     description: 'Trámites y gestiones municipales',
+  },
+  {
+    value: 'educacion',
+    label: 'Educación',
+    icon: 'School',
+    description: 'Programas educativos municipales',
   },
 ] as const;
 
@@ -100,4 +110,5 @@ export const AUTHORITY_CATEGORIES = [
   { value: 'intendente', label: 'Intendente' },
   { value: 'gabinete', label: 'Gabinete Municipal' },
   { value: 'concejo', label: 'Concejo Deliberante' },
+  { value: 'tribunal', label: 'Tribunal de Cuentas' },
 ] as const;

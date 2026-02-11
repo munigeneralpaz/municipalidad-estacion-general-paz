@@ -15,6 +15,7 @@ const authoritiesSlice = createSlice({
       state.intendente = null;
       state.gabinete = [];
       state.concejo = [];
+      state.tribunal = [];
       state.lastFetched = {};
       state.status = {};
     },

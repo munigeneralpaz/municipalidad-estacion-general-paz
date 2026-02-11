@@ -7,6 +7,7 @@ const initialState: ServicesSlice = {
     cultura: [],
     deporte: [],
     tramites: [],
+    educacion: [],
   },
   currentService: null,
   lastFetched: {},

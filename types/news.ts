@@ -12,6 +12,10 @@ export type NewsCategory =
   | 'social'
   | 'medio-ambiente'
   | 'seguridad'
+  | 'recoleccion-residuos'
+  | 'servicio-agua'
+  | 'inmobiliario'
+  | 'registro-civil'
   | 'otros';
 
 export type News = {

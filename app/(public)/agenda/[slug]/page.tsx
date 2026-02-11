@@ -105,7 +105,7 @@ const EventDetailPage = () => {
 
   return (
     <Box>
-      <PageHero title={currentEvent.title} subtitle={formatDate(currentEvent.event_date)} />
+      <PageHero title={currentEvent.title} subtitle={formatDate(currentEvent.event_date)} overlayColor="rgba(245,166,35,0.88)" overlayColorEnd="rgba(253,216,53,0.7)" />
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
         <AnimatedSection animation="fadeInUp">
           {/* Breadcrumbs */}

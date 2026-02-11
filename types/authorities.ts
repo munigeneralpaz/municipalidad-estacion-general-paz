@@ -1,6 +1,6 @@
 import { Status } from './global';
 
-export type AuthorityCategory = 'intendente' | 'gabinete' | 'concejo';
+export type AuthorityCategory = 'intendente' | 'gabinete' | 'concejo' | 'tribunal';
 
 export type Authority = {
   id: string;
@@ -37,6 +37,7 @@ export type AuthoritiesSlice = {
   intendente: Authority | null;
   gabinete: Authority[];
   concejo: Authority[];
+  tribunal: Authority[];
   lastFetched: Record<string, number>;
   status: {
     [key: string]: Status;

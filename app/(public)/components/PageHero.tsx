@@ -1,37 +1,167 @@
-import { Box, Container, Typography } from '@mui/material';
+'use client';
+
+import { Box, Container, Typography, Breadcrumbs } from '@mui/material';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { BREADCRUMB_LABELS } from '@/constants/menu';
+import { NavigateNext as NavigateNextIcon } from '@mui/icons-material';
 
 type PageHeroProps = {
   title: string;
   subtitle?: string;
-  backgroundColor?: string;
+  /** URL de imagen de fondo (stock/unsplash) */
+  backgroundImage?: string;
+  /** Color del gradiente overlay (default: primary blue) */
+  overlayColor?: string;
+  /** Segundo color del gradiente overlay */
+  overlayColorEnd?: string;
 };
+
+// Wave SVG separator — curva suave al final del hero
+const WaveSeparator = () => (
+  <Box
+    sx={{
+      position: 'absolute',
+      bottom: -1,
+      left: 0,
+      right: 0,
+      lineHeight: 0,
+      zIndex: 2,
+    }}
+  >
+    <svg
+      viewBox="0 0 1440 80"
+      preserveAspectRatio="none"
+      style={{ display: 'block', width: '100%', height: '60px' }}
+    >
+      <path
+        d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z"
+        fill="#FAFBFC"
+      />
+    </svg>
+  </Box>
+);
 
 const PageHero = ({
   title,
   subtitle,
-  backgroundColor,
+  backgroundImage,
+  overlayColor = 'rgba(26, 95, 139, 0.85)',
+  overlayColorEnd = 'rgba(46, 134, 193, 0.7)',
 }: PageHeroProps) => {
+  const pathname = usePathname();
+
+  // Build breadcrumb segments from current path
+  const pathSegments = pathname.split('/').filter(Boolean);
+  const breadcrumbs = pathSegments.map((_, index) => {
+    const href = '/' + pathSegments.slice(0, index + 1).join('/');
+    const label = BREADCRUMB_LABELS[href] || pathSegments[index];
+    const isLast = index === pathSegments.length - 1;
+    return { href, label, isLast };
+  });
+
   return (
     <Box
       sx={{
         position: 'relative',
         overflow: 'hidden',
         color: 'white',
-        py: { xs: 6, md: 8 },
-        backgroundColor: backgroundColor || 'primary.main',
-        backgroundImage: backgroundColor
-          ? undefined
-          : 'linear-gradient(135deg, #2E86C1 0%, #1A5F8B 100%)',
+        py: { xs: 7, md: 9 },
+        pb: { xs: 10, md: 12 },
+        minHeight: { xs: 200, md: 260 },
+        display: 'flex',
+        alignItems: 'center',
       }}
     >
-      <Container maxWidth="lg">
+      {/* Background image */}
+      {backgroundImage && (
+        <Box
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            zIndex: 0,
+          }}
+        />
+      )}
+
+      {/* Gradient overlay */}
+      <Box
+        sx={{
+          position: 'absolute',
+          inset: 0,
+          background: backgroundImage
+            ? `linear-gradient(135deg, ${overlayColor} 0%, ${overlayColorEnd} 100%)`
+            : `linear-gradient(135deg, ${overlayColor} 0%, ${overlayColorEnd} 100%)`,
+          zIndex: 1,
+        }}
+      />
+
+      {/* Decorative shapes */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: -60,
+          right: -60,
+          width: 200,
+          height: 200,
+          borderRadius: '50%',
+          background: 'rgba(255,255,255,0.06)',
+          zIndex: 1,
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: 20,
+          left: -40,
+          width: 150,
+          height: 150,
+          borderRadius: '50%',
+          background: 'rgba(255,255,255,0.04)',
+          zIndex: 1,
+        }}
+      />
+
+      {/* Content */}
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+        {/* Breadcrumbs */}
+        {breadcrumbs.length > 0 && (
+          <Breadcrumbs
+            separator={<NavigateNextIcon sx={{ fontSize: 16, color: 'rgba(255,255,255,0.6)' }} />}
+            sx={{ mb: 2 }}
+          >
+            <Link href="/" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '0.875rem' }}>
+              Inicio
+            </Link>
+            {breadcrumbs.map((crumb) =>
+              crumb.isLast ? (
+                <Typography key={crumb.href} variant="body2" sx={{ color: 'white', fontWeight: 600 }}>
+                  {crumb.label}
+                </Typography>
+              ) : (
+                <Link
+                  key={crumb.href}
+                  href={crumb.href}
+                  style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', fontSize: '0.875rem' }}
+                >
+                  {crumb.label}
+                </Link>
+              )
+            )}
+          </Breadcrumbs>
+        )}
+
         <Typography
           variant="h2"
           component="h1"
           gutterBottom
           sx={{
-            fontWeight: 700,
+            fontWeight: 800,
             fontSize: { xs: '2rem', md: '3rem' },
+            textShadow: '0 2px 12px rgba(0,0,0,0.15)',
           }}
         >
           {title}
@@ -41,13 +171,18 @@ const PageHero = ({
             variant="h5"
             sx={{
               opacity: 0.9,
-              fontSize: { xs: '1.125rem', md: '1.5rem' },
+              fontSize: { xs: '1.05rem', md: '1.35rem' },
+              maxWidth: 600,
+              lineHeight: 1.6,
             }}
           >
             {subtitle}
           </Typography>
         )}
       </Container>
+
+      {/* Wave separator */}
+      <WaveSeparator />
     </Box>
   );
 };

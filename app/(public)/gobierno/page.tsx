@@ -14,7 +14,9 @@ import {
   Person as PersonIcon,
   Group as GroupIcon,
   Gavel as GavelIcon,
+  AccountBalance as AccountBalanceIcon,
   HistoryEdu as HistoryEduIcon,
+  Policy as PolicyIcon,
 } from '@mui/icons-material';
 import { PUBLIC_ROUTES } from '@/constants';
 import PageHero from '../components/PageHero';
@@ -35,10 +37,16 @@ const MunicipalidadPage = () => {
       href: PUBLIC_ROUTES.MUNICIPALIDAD_GABINETE,
     },
     {
-      title: 'Concejo Deliberante',
+      title: 'Honorable Concejo Deliberante',
       description: 'Concejales y cuerpo legislativo',
       icon: <GavelIcon sx={{ fontSize: 64, color: 'primary.main' }} />,
       href: PUBLIC_ROUTES.MUNICIPALIDAD_CONCEJO,
+    },
+    {
+      title: 'Honorable Tribunal de Cuentas',
+      description: 'Órgano de control y fiscalización municipal',
+      icon: <AccountBalanceIcon sx={{ fontSize: 64, color: 'primary.main' }} />,
+      href: PUBLIC_ROUTES.MUNICIPALIDAD_TRIBUNAL,
     },
     {
       title: 'Historia de la Ciudad',
@@ -46,16 +54,22 @@ const MunicipalidadPage = () => {
       icon: <HistoryEduIcon sx={{ fontSize: 64, color: 'primary.main' }} />,
       href: PUBLIC_ROUTES.MUNICIPALIDAD_HISTORIA,
     },
+    {
+      title: 'Transparencia',
+      description: 'Ordenanzas y regulaciones municipales',
+      icon: <PolicyIcon sx={{ fontSize: 64, color: 'primary.main' }} />,
+      href: PUBLIC_ROUTES.NORMATIVA,
+    },
   ];
 
   return (
     <Box>
-      <PageHero title="Municipalidad" subtitle="Conoce a las autoridades y la historia de nuestra ciudad" />
+      <PageHero title="Gobierno" subtitle="Conoce a las autoridades y la historia de nuestra ciudad" backgroundImage="https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
 
       {/* Sections Grid */}
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 4 }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 4 }}>
           {sections.map((section) => (
             <Box key={section.title}>
               <Card
@@ -106,10 +120,10 @@ const MunicipalidadPage = () => {
         {/* About Section */}
         <Paper sx={{ p: 4, mt: 6 }}>
           <Typography variant="h4" gutterBottom sx={{ fontWeight: 600 }}>
-            Nuestra Municipalidad
+            Nuestro Gobierno
           </Typography>
           <Typography variant="body1" paragraph>
-            La Municipalidad de Estación General Paz es el gobierno local
+            El Gobierno de Estación General Paz es el gobierno local
             encargado de administrar y gestionar los servicios públicos,
             promover el desarrollo sostenible y mejorar la calidad de vida de
             todos los habitantes de nuestra ciudad.

@@ -31,11 +31,13 @@ const extraReducersAuthorities = (
         action.payload.find((a) => a.category === 'intendente') || null;
       state.gabinete = action.payload.filter((a) => a.category === 'gabinete');
       state.concejo = action.payload.filter((a) => a.category === 'concejo');
+      state.tribunal = action.payload.filter((a) => a.category === 'tribunal');
 
       const now = Date.now();
       state.lastFetched['intendente'] = now;
       state.lastFetched['gabinete'] = now;
       state.lastFetched['concejo'] = now;
+      state.lastFetched['tribunal'] = now;
 
       state.status.getAuthoritiesAsync = {
         response: 'fulfilled',
@@ -71,6 +73,8 @@ const extraReducersAuthorities = (
         state.gabinete = data;
       } else if (category === 'concejo') {
         state.concejo = data;
+      } else if (category === 'tribunal') {
+        state.tribunal = data;
       }
 
       state.lastFetched[category] = Date.now();
@@ -138,6 +142,8 @@ const extraReducersAuthorities = (
         state.gabinete.push(action.payload);
       } else if (action.payload.category === 'concejo') {
         state.concejo.push(action.payload);
+      } else if (action.payload.category === 'tribunal') {
+        state.tribunal.push(action.payload);
       }
 
       state.lastFetched = {};
@@ -191,6 +197,13 @@ const extraReducersAuthorities = (
         if (conIndex !== -1) {
           state.concejo[conIndex] = action.payload;
         }
+      } else if (action.payload.category === 'tribunal') {
+        const tribIndex = state.tribunal.findIndex(
+          (a) => a.id === action.payload.id
+        );
+        if (tribIndex !== -1) {
+          state.tribunal[tribIndex] = action.payload;
+        }
       }
 
       state.lastFetched = {};
@@ -229,6 +242,7 @@ const extraReducersAuthorities = (
       }
       state.gabinete = state.gabinete.filter((a) => a.id !== action.payload);
       state.concejo = state.concejo.filter((a) => a.id !== action.payload);
+      state.tribunal = state.tribunal.filter((a) => a.id !== action.payload);
 
       state.lastFetched = {};
       state.status.deleteAuthorityAsync = {

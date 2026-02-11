@@ -28,27 +28,27 @@ import { CACHE_TTL } from '@/constants/cache';
 import PageHero from '../../components/PageHero';
 import AnimatedSection from '../../components/AnimatedSection';
 
-const DeportePage = () => {
+const CulturaPage = () => {
   const { servicesByCategory, status } = useAppSelector(
     (state) => state.services
   );
 
   useCachedFetch({
     selector: (state) => state.services.lastFetched,
-    dataKey: 'servicesByCategory.deporte',
-    fetchAction: () => getServicesByCategoryAsync('deporte'),
+    dataKey: 'servicesByCategory.cultura',
+    fetchAction: () => getServicesByCategoryAsync('cultura'),
     ttl: CACHE_TTL.SERVICES,
-    hasData: servicesByCategory.deporte.length > 0,
+    hasData: servicesByCategory.cultura.length > 0,
   });
 
-  const services = servicesByCategory.deporte;
+  const services = servicesByCategory.cultura;
   const loading = status.getServicesByCategoryAsync?.loading;
   const error = status.getServicesByCategoryAsync?.response === 'rejected';
 
   if (error && !services.length) {
     return (
       <Box>
-        <PageHero title="Servicios de Deporte" subtitle="Polideportivos, clases y actividades recreativas para todas las edades" backgroundColor="#F5A623" />
+        <PageHero title="Servicios de Cultura" subtitle="Eventos culturales, talleres artísticos y actividades para el desarrollo cultural" backgroundImage="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1600&q=80" overlayColor="rgba(181,42,28,0.88)" overlayColorEnd="rgba(212,85,74,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -75,13 +75,13 @@ const DeportePage = () => {
 
   return (
     <Box>
-      <PageHero title="Servicios de Deporte" subtitle="Polideportivos, clases y actividades recreativas para todas las edades" backgroundColor="#F5A623" />
+      <PageHero title="Servicios de Cultura" subtitle="Eventos culturales, talleres artísticos y actividades para el desarrollo cultural" backgroundImage="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1600&q=80" overlayColor="rgba(181,42,28,0.88)" overlayColorEnd="rgba(212,85,74,0.72)" />
 
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">
         {services.length === 0 ? (
           <Alert severity="info">
-            La información de servicios deportivos no está disponible en este momento.
+            La información de servicios culturales no está disponible en este momento.
           </Alert>
         ) : (
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 4 }}>
@@ -89,7 +89,7 @@ const DeportePage = () => {
               <Box key={service.id}>
                 <Card sx={{ height: '100%' }}>
                   <CardContent sx={{ p: 3 }}>
-                    <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, color: '#F5A623' }}>
+                    <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, color: '#B52A1C' }}>
                       {service.title}
                     </Typography>
                     <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
@@ -165,4 +165,4 @@ const DeportePage = () => {
   );
 };
 
-export default DeportePage;
+export default CulturaPage;

@@ -107,6 +107,9 @@ const AgendaPage = () => {
       <PageHero
         title="Agenda de Eventos"
         subtitle="Actividades culturales, deportivas e institucionales de nuestra ciudad"
+        backgroundImage="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1600&q=80"
+        overlayColor="rgba(245,166,35,0.88)"
+        overlayColorEnd="rgba(253,216,53,0.7)"
       />
 
       <Container maxWidth="lg" sx={{ py: { xs: 4, md: 6 } }}>

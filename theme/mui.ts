@@ -3,12 +3,22 @@ import { createTheme } from '@mui/material/styles';
 // ============================================================================
 // THEME MUI - MUNICIPALIDAD GENERAL PAZ
 // ============================================================================
-// Paleta basada en el logo institucional:
+// Paleta basada en el logo institucional (5 colores):
 // - Azul (espiral interior) → Primary
 // - Rojo ladrillo (espiral exterior) → Secondary
 // - Naranja/Ámbar (espiral media) → Warning / Accent
-// - Gris oscuro (texto del logo) → Text
+// - Verde (naturaleza/crecimiento) → Success / Decorativo
+// - Amarillo (sol/alegría) → Decorativo
 // ============================================================================
+
+// Colores extendidos del logo para uso en componentes
+export const BRAND_COLORS = {
+  blue: { main: '#2E86C1', light: '#5DA9D9', dark: '#1A5F8B', bg: '#EBF5FB' },
+  red: { main: '#B52A1C', light: '#D4554A', dark: '#8C1F14', bg: '#FDECEA' },
+  orange: { main: '#F5A623', light: '#F7BC5A', dark: '#C4841B', bg: '#FFF8E1' },
+  green: { main: '#43A047', light: '#66BB6A', dark: '#2E7D32', bg: '#E8F5E9' },
+  yellow: { main: '#FDD835', light: '#FFEE58', dark: '#F9A825', bg: '#FFFDE7' },
+} as const;
 
 const theme = createTheme({
   palette: {
@@ -28,9 +38,9 @@ const theme = createTheme({
     },
     // Estados y feedback
     success: {
-      main: '#2E7D32',
-      light: '#4CAF50',
-      dark: '#1B5E20',
+      main: '#43A047',
+      light: '#66BB6A',
+      dark: '#2E7D32',
       contrastText: '#FFFFFF',
     },
     info: {
@@ -53,69 +63,66 @@ const theme = createTheme({
     },
     // Backgrounds
     background: {
-      default: '#F5F5F5',
+      default: '#FAFBFC',
       paper: '#FFFFFF',
     },
     // Textos
     text: {
-      primary: '#333333',
-      secondary: '#666666',
-      disabled: '#BDBDBD',
+      primary: '#2D3436',
+      secondary: '#636E72',
+      disabled: '#B2BEC3',
     },
     // Divisores
-    divider: '#E0E0E0',
+    divider: '#DFE6E9',
   },
 
   typography: {
     fontFamily: [
-      'Roboto',
+      'Nunito',
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',
       '"Helvetica Neue"',
       'Arial',
       'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
     ].join(','),
 
-    // Títulos y encabezados
+    // Títulos y encabezados — Nunito tiene personalidad cálida
     h1: {
       fontSize: '2.5rem',
-      fontWeight: 700,
+      fontWeight: 800,
       lineHeight: 1.2,
-      letterSpacing: '-0.01562em',
+      letterSpacing: '-0.02em',
     },
     h2: {
       fontSize: '2rem',
-      fontWeight: 600,
+      fontWeight: 700,
       lineHeight: 1.3,
-      letterSpacing: '-0.00833em',
+      letterSpacing: '-0.01em',
     },
     h3: {
       fontSize: '1.75rem',
+      fontWeight: 700,
+      lineHeight: 1.4,
+      letterSpacing: '-0.005em',
+    },
+    h4: {
+      fontSize: '1.5rem',
       fontWeight: 600,
       lineHeight: 1.4,
       letterSpacing: '0em',
     },
-    h4: {
-      fontSize: '1.5rem',
-      fontWeight: 500,
-      lineHeight: 1.4,
-      letterSpacing: '0.00735em',
-    },
     h5: {
       fontSize: '1.25rem',
-      fontWeight: 500,
+      fontWeight: 600,
       lineHeight: 1.5,
       letterSpacing: '0em',
     },
     h6: {
       fontSize: '1rem',
-      fontWeight: 500,
+      fontWeight: 600,
       lineHeight: 1.6,
-      letterSpacing: '0.0075em',
+      letterSpacing: '0em',
     },
 
     // Subtítulos
@@ -315,7 +322,16 @@ const theme = createTheme({
     MuiDivider: {
       styleOverrides: {
         root: {
-          borderColor: '#E0E0E0',
+          borderColor: '#DFE6E9',
+        },
+      },
+    },
+
+    // Alert más amigable
+    MuiAlert: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
         },
       },
     },

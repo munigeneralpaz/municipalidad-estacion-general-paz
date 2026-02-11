@@ -25,30 +25,30 @@ import { useAppSelector } from '@/state/redux/store';
 import { getServicesByCategoryAsync } from '@/state/redux/services';
 import { useCachedFetch } from '@/hooks';
 import { CACHE_TTL } from '@/constants/cache';
-import PageHero from '../../components/PageHero';
-import AnimatedSection from '../../components/AnimatedSection';
+import PageHero from '../components/PageHero';
+import AnimatedSection from '../components/AnimatedSection';
 
-const CulturaPage = () => {
+const TramitesPage = () => {
   const { servicesByCategory, status } = useAppSelector(
     (state) => state.services
   );
 
   useCachedFetch({
     selector: (state) => state.services.lastFetched,
-    dataKey: 'servicesByCategory.cultura',
-    fetchAction: () => getServicesByCategoryAsync('cultura'),
+    dataKey: 'servicesByCategory.tramites',
+    fetchAction: () => getServicesByCategoryAsync('tramites'),
     ttl: CACHE_TTL.SERVICES,
-    hasData: servicesByCategory.cultura.length > 0,
+    hasData: servicesByCategory.tramites.length > 0,
   });
 
-  const services = servicesByCategory.cultura;
+  const services = servicesByCategory.tramites;
   const loading = status.getServicesByCategoryAsync?.loading;
   const error = status.getServicesByCategoryAsync?.response === 'rejected';
 
   if (error && !services.length) {
     return (
       <Box>
-        <PageHero title="Servicios de Cultura" subtitle="Eventos culturales, talleres artísticos y actividades para el desarrollo cultural" backgroundColor="#B52A1C" />
+        <PageHero title="Trámites Municipales" subtitle="Gestiones administrativas, documentación y trámites online y presenciales" backgroundImage="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -75,13 +75,13 @@ const CulturaPage = () => {
 
   return (
     <Box>
-      <PageHero title="Servicios de Cultura" subtitle="Eventos culturales, talleres artísticos y actividades para el desarrollo cultural" backgroundColor="#B52A1C" />
+      <PageHero title="Trámites Municipales" subtitle="Gestiones administrativas, documentación y trámites online y presenciales" backgroundImage="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
 
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">
         {services.length === 0 ? (
           <Alert severity="info">
-            La información de servicios culturales no está disponible en este momento.
+            La información de trámites no está disponible en este momento.
           </Alert>
         ) : (
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 4 }}>
@@ -89,7 +89,7 @@ const CulturaPage = () => {
               <Box key={service.id}>
                 <Card sx={{ height: '100%' }}>
                   <CardContent sx={{ p: 3 }}>
-                    <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, color: '#B52A1C' }}>
+                    <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, color: '#1A5F8B' }}>
                       {service.title}
                     </Typography>
                     <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
@@ -165,4 +165,4 @@ const CulturaPage = () => {
   );
 };
 
-export default CulturaPage;
+export default TramitesPage;

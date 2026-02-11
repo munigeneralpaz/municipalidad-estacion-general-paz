@@ -88,7 +88,7 @@ const NormativaPage = () => {
 
   return (
     <Box>
-      <PageHero title="Normativa Municipal" subtitle="Consulta ordenanzas y regulaciones municipales" />
+      <PageHero title="Normativa Municipal" subtitle="Consulta ordenanzas y regulaciones municipales" backgroundImage="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80" overlayColor="rgba(181,42,28,0.85)" overlayColorEnd="rgba(245,166,35,0.7)" />
 
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">

@@ -35,7 +35,7 @@ const HistoriaPage = () => {
   if (error && !municipalityInfo) {
     return (
       <Box>
-        <PageHero title="Historia de la Ciudad" subtitle="Conoce nuestras raíces y patrimonio" />
+        <PageHero title="Historia de la Ciudad" subtitle="Conoce nuestras raíces y patrimonio" backgroundImage="https://images.unsplash.com/photo-1461360370896-922624d12a74?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
         <Container maxWidth="md" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -59,7 +59,7 @@ const HistoriaPage = () => {
 
   return (
     <Box>
-      <PageHero title="Historia de la Ciudad" subtitle="Conoce nuestras raíces y patrimonio" />
+      <PageHero title="Historia de la Ciudad" subtitle="Conoce nuestras raíces y patrimonio" backgroundImage="https://images.unsplash.com/photo-1461360370896-922624d12a74?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
 
       <Container maxWidth="md" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">

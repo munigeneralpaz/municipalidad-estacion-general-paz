@@ -2,6 +2,9 @@
    ESTILOS GLOBALES - MUNICIPALIDAD GENERAL PAZ
    =========================================================================== */
 
+/* Google Fonts — Nunito: warm, rounded, community-friendly */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+
 /* Reset básico */
 * {
   margin: 0;
@@ -9,17 +12,16 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+  scroll-padding-top: 100px;
 }
 
 body {
-  background-color: #F5F5F5;
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  max-width: 100vw;
+  overflow-x: clip;
+  background-color: #FAFBFC;
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

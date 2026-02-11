@@ -16,9 +16,6 @@ import {
 import {
   ArrowForward as ArrowForwardIcon,
   InfoOutlined as InfoOutlinedIcon,
-  AccountBalance as AccountBalanceIcon,
-  Gavel as GavelIcon,
-  Phone as PhoneIcon,
 } from '@mui/icons-material';
 import { useAppSelector } from '@/state/redux/store';
 import { getFeaturedNewsAsync } from '@/state/redux/news';
@@ -26,34 +23,41 @@ import { useCachedFetch } from '@/hooks';
 import { CACHE_TTL } from '@/constants/cache';
 import { PUBLIC_ROUTES, SERVICES } from '@/constants';
 import HeroCarousel from './components/HeroCarousel';
-import QuickAccessBar from './components/QuickAccessBar';
 import AnimatedSection from './components/AnimatedSection';
 import SectionTitle from './components/SectionTitle';
 import NewsCard from './components/NewsCard';
 import EmergencyPhones from './components/EmergencyPhones';
-import classes from './components/classes';
 
 const heroSlides = [
   {
     id: '1',
-    title: 'Bienvenido a la Municipalidad de Estación General Paz',
-    subtitle: 'Trabajando juntos por una ciudad mejor. Accede a todos los servicios municipales desde un solo lugar.',
+    title: 'Bienvenidos a Estación General Paz',
+    subtitle: 'Trabajando juntos por una ciudad mejor. Accedé a todos los servicios municipales desde un solo lugar.',
     ctaText: 'Ver Novedades',
     ctaHref: PUBLIC_ROUTES.NOVEDADES,
+    backgroundImage: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=1600&q=80',
+    overlayColor: 'rgba(26, 95, 139, 0.85)',
+    overlayColorEnd: 'rgba(46, 134, 193, 0.65)',
   },
   {
     id: '2',
-    title: 'Servicios Municipales a tu Alcance',
-    subtitle: 'Salud, cultura, deporte y trámites. Todo lo que necesitás al alcance de un click.',
-    ctaText: 'Explorar Servicios',
+    title: 'Areas Municipales a tu Alcance',
+    subtitle: 'Salud, cultura, deporte y educación. Todo lo que necesitás al alcance de un click.',
+    ctaText: 'Explorar Areas',
     ctaHref: PUBLIC_ROUTES.SERVICIOS,
+    backgroundImage: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&q=80',
+    overlayColor: 'rgba(67, 160, 71, 0.82)',
+    overlayColorEnd: 'rgba(46, 134, 193, 0.7)',
   },
   {
     id: '3',
     title: 'Transparencia y Compromiso',
     subtitle: 'Consultá normativas, ordenanzas y toda la información institucional de nuestra ciudad.',
-    ctaText: 'Ver Normativa',
+    ctaText: 'Ver Transparencia',
     ctaHref: PUBLIC_ROUTES.NORMATIVA,
+    backgroundImage: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1600&q=80',
+    overlayColor: 'rgba(181, 42, 28, 0.82)',
+    overlayColorEnd: 'rgba(245, 166, 35, 0.65)',
   },
 ];
 
@@ -75,9 +79,6 @@ const HomePage = () => {
     <Box>
       {/* ── Hero Carousel ─────────────────────────────── */}
       <HeroCarousel slides={heroSlides} />
-
-      {/* ── Quick Access Bar ──────────────────────────── */}
-      <QuickAccessBar />
 
       {/* ── Novedades Destacadas ──────────────────────── */}
       <Box sx={{ py: { xs: 6, md: 8 } }}>
@@ -179,13 +180,20 @@ const HomePage = () => {
         </Container>
       </Box>
 
-      {/* ── Servicios Municipales ─────────────────────── */}
-      <Box sx={{ backgroundColor: 'grey.50', py: { xs: 6, md: 8 } }}>
-        <Container maxWidth="lg">
+      {/* ── Areas Municipales ──────────────────────────── */}
+      <Box sx={{ position: 'relative', py: { xs: 6, md: 8 }, overflow: 'hidden' }}>
+        {/* Decorative background */}
+        <Box sx={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(180deg, #FAFBFC 0%, #EBF5FB 50%, #E8F5E9 100%)',
+          zIndex: 0,
+        }} />
+
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
           <AnimatedSection animation="fadeInUp">
             <SectionTitle
-              title="Servicios Municipales"
-              subtitle="Accede a todos los servicios que ofrece la municipalidad"
+              title="Areas Municipales"
+              subtitle="Accedé a todos los servicios que ofrece la municipalidad"
             />
           </AnimatedSection>
 
@@ -212,15 +220,36 @@ const HomePage = () => {
                     component={Link}
                     href={service.href}
                     sx={{
-                      ...classes.serviceCard,
-                      borderTopColor: service.color,
+                      p: 3,
+                      textAlign: 'center',
+                      textDecoration: 'none',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      minHeight: 220,
+                      borderRadius: 3,
+                      border: '2px solid transparent',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        transform: 'translateY(-6px)',
+                        boxShadow: `0 12px 32px ${service.color}25`,
+                        borderColor: `${service.color}40`,
+                      },
                     }}
                   >
                     <Box
                       sx={{
-                        ...classes.serviceIconWrapper,
-                        backgroundColor: `${service.color}15`,
+                        width: 72,
+                        height: 72,
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        mb: 2,
+                        backgroundColor: `${service.color}12`,
                         color: service.color,
+                        transition: 'all 0.3s ease',
                       }}
                     >
                       <ServiceIcon sx={{ fontSize: 36 }} />
@@ -228,7 +257,7 @@ const HomePage = () => {
                     <Typography
                       variant="h6"
                       gutterBottom
-                      sx={{ fontWeight: 600 }}
+                      sx={{ fontWeight: 700 }}
                     >
                       {service.title}
                     </Typography>
@@ -256,22 +285,60 @@ const HomePage = () => {
       <EmergencyPhones />
 
       {/* ── Banner Institucional ──────────────────────── */}
-      <Box sx={classes.institutionalBanner}>
-        <Container maxWidth="lg">
-          <Box sx={classes.institutionalBannerContent}>
+      <Box
+        sx={{
+          position: 'relative',
+          py: { xs: 8, md: 10 },
+          overflow: 'hidden',
+          color: 'white',
+        }}
+      >
+        {/* Colored gradient background */}
+        <Box
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(135deg, #1A5F8B 0%, #2E86C1 40%, #43A047 100%)',
+          }}
+        />
+        {/* Decorative circles */}
+        <Box sx={{ position: 'absolute', top: -40, right: '15%', width: 200, height: 200, borderRadius: '50%', background: 'rgba(253,216,53,0.1)' }} />
+        <Box sx={{ position: 'absolute', bottom: -30, left: '10%', width: 160, height: 160, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
+
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+              gap: { xs: 4, md: 6 },
+              alignItems: 'center',
+            }}
+          >
             <AnimatedSection animation="fadeInLeft">
               <Box>
-                <SectionTitle
-                  title="Nuestra Municipalidad"
-                  subtitle="Conocé la historia, autoridades y el compromiso institucional con la comunidad de Estación General Paz."
-                  align="left"
-                />
+                <Typography variant="h3" sx={{ fontWeight: 800, mb: 2 }}>
+                  Nuestro Gobierno
+                </Typography>
+                <Typography variant="body1" sx={{ mb: 4, opacity: 0.9, lineHeight: 1.8, maxWidth: 480 }}>
+                  Conocé la historia, autoridades y el compromiso institucional con la comunidad de Estación General Paz.
+                </Typography>
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                   <Button
                     variant="contained"
                     component={Link}
                     href={PUBLIC_ROUTES.MUNICIPALIDAD}
                     endIcon={<ArrowForwardIcon />}
+                    sx={{
+                      backgroundColor: '#FDD835',
+                      color: '#2D3436',
+                      fontWeight: 700,
+                      borderRadius: '50px',
+                      px: 3,
+                      '&:hover': {
+                        backgroundColor: '#FFEE58',
+                        boxShadow: '0 4px 16px rgba(253,216,53,0.4)',
+                      },
+                    }}
                   >
                     Conocer más
                   </Button>
@@ -279,6 +346,16 @@ const HomePage = () => {
                     variant="outlined"
                     component={Link}
                     href={PUBLIC_ROUTES.MUNICIPALIDAD_INTENDENTE}
+                    sx={{
+                      color: 'white',
+                      borderColor: 'rgba(255,255,255,0.5)',
+                      borderRadius: '50px',
+                      px: 3,
+                      '&:hover': {
+                        borderColor: 'white',
+                        backgroundColor: 'rgba(255,255,255,0.1)',
+                      },
+                    }}
                   >
                     Intendente
                   </Button>
@@ -292,7 +369,7 @@ const HomePage = () => {
                   alt="Municipalidad de Estación General Paz"
                   width={240}
                   height={288}
-                  style={{ opacity: 0.9 }}
+                  style={{ opacity: 0.9, filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.2))' }}
                 />
               </Box>
             </AnimatedSection>
@@ -300,86 +377,6 @@ const HomePage = () => {
         </Container>
       </Box>
 
-      {/* ── Accesos Rápidos ───────────────────────────── */}
-      <Box sx={{ py: { xs: 6, md: 8 } }}>
-        <Container maxWidth="lg">
-          <AnimatedSection animation="fadeInUp">
-            <SectionTitle
-              title="Accesos Rápidos"
-              subtitle="Enlaces directos a las secciones más consultadas"
-            />
-          </AnimatedSection>
-
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: {
-                xs: '1fr',
-                md: 'repeat(3, 1fr)',
-              },
-              gap: 3,
-            }}
-          >
-            {[
-              {
-                title: 'Municipalidad',
-                description: 'Conoce a nuestras autoridades y la historia de nuestra ciudad',
-                href: PUBLIC_ROUTES.MUNICIPALIDAD,
-                buttonText: 'Ver más',
-                icon: <AccountBalanceIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />,
-              },
-              {
-                title: 'Normativa',
-                description: 'Consulta ordenanzas y regulaciones municipales',
-                href: PUBLIC_ROUTES.NORMATIVA,
-                buttonText: 'Ver normativa',
-                icon: <GavelIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />,
-              },
-              {
-                title: 'Contacto',
-                description: 'Números útiles y datos de contacto',
-                href: PUBLIC_ROUTES.CONTACTO,
-                buttonText: 'Contactar',
-                icon: <PhoneIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />,
-              },
-            ].map((item, index) => (
-              <AnimatedSection
-                key={item.title}
-                animation="fadeInUp"
-                delay={index * 100}
-              >
-                <Card sx={classes.quickLinkCard}>
-                  <CardContent sx={{ textAlign: 'center' }}>
-                    {item.icon}
-                    <Typography
-                      variant="h5"
-                      gutterBottom
-                      sx={{ fontWeight: 600 }}
-                    >
-                      {item.title}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ mb: 3 }}
-                    >
-                      {item.description}
-                    </Typography>
-                    <Button
-                      variant="contained"
-                      component={Link}
-                      href={item.href}
-                      fullWidth
-                    >
-                      {item.buttonText}
-                    </Button>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-            ))}
-          </Box>
-        </Container>
-      </Box>
     </Box>
   );
 };

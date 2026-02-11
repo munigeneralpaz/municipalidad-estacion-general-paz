@@ -18,7 +18,7 @@ export const MAIN_MENU: MenuItem[] = [
     href: PUBLIC_ROUTES.HOME,
   },
   {
-    label: 'Municipalidad',
+    label: 'Gobierno',
     href: PUBLIC_ROUTES.MUNICIPALIDAD,
     children: [
       {
@@ -30,21 +30,25 @@ export const MAIN_MENU: MenuItem[] = [
         href: PUBLIC_ROUTES.MUNICIPALIDAD_GABINETE,
       },
       {
-        label: 'Concejo Deliberante',
+        label: 'Honorable Concejo Deliberante',
         href: PUBLIC_ROUTES.MUNICIPALIDAD_CONCEJO,
+      },
+      {
+        label: 'Honorable Tribunal de Cuentas',
+        href: PUBLIC_ROUTES.MUNICIPALIDAD_TRIBUNAL,
       },
       {
         label: 'Historia de la Ciudad',
         href: PUBLIC_ROUTES.MUNICIPALIDAD_HISTORIA,
       },
+      {
+        label: 'Transparencia',
+        href: PUBLIC_ROUTES.NORMATIVA,
+      },
     ],
   },
   {
-    label: 'Novedades',
-    href: PUBLIC_ROUTES.NOVEDADES,
-  },
-  {
-    label: 'Servicios',
+    label: 'Areas',
     href: PUBLIC_ROUTES.SERVICIOS,
     children: [
       {
@@ -60,14 +64,14 @@ export const MAIN_MENU: MenuItem[] = [
         href: PUBLIC_ROUTES.SERVICIOS_DEPORTE,
       },
       {
-        label: 'Trámites',
-        href: PUBLIC_ROUTES.SERVICIOS_TRAMITES,
+        label: 'Educación',
+        href: PUBLIC_ROUTES.SERVICIOS_EDUCACION,
       },
     ],
   },
   {
-    label: 'Normativa',
-    href: PUBLIC_ROUTES.NORMATIVA,
+    label: 'Trámites',
+    href: PUBLIC_ROUTES.SERVICIOS_TRAMITES,
   },
   {
     label: 'Agenda',
@@ -121,18 +125,20 @@ export const ADMIN_MENU: MenuItem[] = [
 // Breadcrumbs labels
 export const BREADCRUMB_LABELS: Record<string, string> = {
   '/': 'Inicio',
-  '/municipalidad': 'Municipalidad',
-  '/municipalidad/intendente': 'Intendente',
-  '/municipalidad/gabinete': 'Gabinete Municipal',
-  '/municipalidad/concejo': 'Concejo Deliberante',
-  '/municipalidad/historia': 'Historia',
+  '/gobierno': 'Gobierno',
+  '/gobierno/intendente': 'Intendente',
+  '/gobierno/gabinete': 'Gabinete Municipal',
+  '/gobierno/concejo': 'Honorable Concejo Deliberante',
+  '/gobierno/tribunal-de-cuentas': 'Honorable Tribunal de Cuentas',
+  '/gobierno/historia': 'Historia',
   '/novedades': 'Novedades',
-  '/servicios': 'Servicios',
-  '/servicios/salud': 'Salud',
-  '/servicios/cultura': 'Cultura',
-  '/servicios/deporte': 'Deporte',
-  '/servicios/tramites': 'Trámites',
-  '/normativa': 'Normativa',
+  '/areas': 'Areas',
+  '/areas/salud': 'Salud',
+  '/areas/cultura': 'Cultura',
+  '/areas/deporte': 'Deporte',
+  '/tramites': 'Trámites',
+  '/areas/educacion': 'Educación',
+  '/normativa': 'Transparencia',
   '/contacto': 'Contacto',
   '/admin': 'Dashboard',
   '/admin/novedades': 'Novedades',

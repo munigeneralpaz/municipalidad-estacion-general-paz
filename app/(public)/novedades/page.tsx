@@ -82,6 +82,9 @@ const NovedadesPage = () => {
       <PageHero
         title="Novedades"
         subtitle="Mantente informado sobre las últimas noticias y eventos de nuestra ciudad"
+        backgroundImage="https://images.unsplash.com/photo-1504711434969-e33886168d9c?w=1600&q=80"
+        overlayColor="rgba(46,134,193,0.88)"
+        overlayColorEnd="rgba(67,160,71,0.72)"
       />
       <Container maxWidth="lg" sx={{ py: { xs: 4, md: 6 } }}>
       <AnimatedSection animation="fadeInUp">

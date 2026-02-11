@@ -1,8 +1,10 @@
+import theme from "@/theme/mui";
+
 const classes = {
   // Header
   header: {
-    backgroundColor: 'primary.main',
-    color: 'white',
+    backgroundColor: 'common.white',
+    color: 'text.primary',
     boxShadow: 2,
   },
   headerToolbar: {
@@ -12,9 +14,9 @@ const classes = {
   logo: {
     display: 'flex',
     alignItems: 'center',
-    gap: 1.5,
+    gap: 1,
     textDecoration: 'none',
-    color: 'white',
+    color: 'text.primary',
   },
   logoText: {
     display: { xs: 'none', sm: 'block' },
@@ -23,20 +25,22 @@ const classes = {
     fontWeight: 700,
     fontSize: { xs: '1rem', md: '1.25rem' },
     lineHeight: 1.2,
+    color: 'primary.main'
   },
   logoSubtitle: {
     fontSize: { xs: '0.75rem', md: '0.875rem' },
-    opacity: 0.9,
+    color: 'primary.main'
   },
   desktopNav: {
     display: { xs: 'none', md: 'flex' },
     gap: 1,
-    ml: 4,
+    ml: 0,
   },
   navButton: {
-    color: 'white',
+    color: 'text.primary',
+    fontWeight: 500,
     '&:hover': {
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      backgroundColor: 'grey.100',
     },
   },
   loginButton: {
@@ -51,7 +55,7 @@ const classes = {
   mobileMenuButton: {
     display: { xs: 'flex', md: 'none' },
     ml: 'auto',
-    color: 'white',
+    color: 'text.primary',
   },
 
   // Mobile Drawer
@@ -63,7 +67,6 @@ const classes = {
   },
   drawerHeader: {
     p: 2,
-    backgroundColor: 'primary.main',
     color: 'white',
   },
   drawerList: {
@@ -72,6 +75,23 @@ const classes = {
   drawerListItem: {
     '&:hover': {
       backgroundColor: 'action.hover',
+    },
+    '&.Mui-selected': {
+      backgroundColor: 'primary.main',
+      color: 'primary.contrastText',
+    },
+    '&.Mui-selected:hover': {
+      backgroundColor: 'primary.dark',
+    },
+  },
+  drawerListItemCollapse: {
+    pl: 4,
+    '&.Mui-selected': {
+      backgroundColor: 'primary.main',
+      color: 'primary.contrastText',
+    },
+    '&.Mui-selected:hover': {
+      backgroundColor: 'primary.dark',
     },
   },
   drawerLoginButton: {
@@ -398,6 +418,14 @@ const classes = {
     gap: { xs: 4, md: 6 },
     alignItems: 'center',
   },
+
+  listItem: {
+    borderBottom: `1px solid ${theme.palette.divider}`
+  },
+  listItemHome: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    borderTop: `1px solid ${theme.palette.divider}`
+  }
 };
 
 export default classes;

@@ -23,7 +23,8 @@
       "Bash(cat:*)",
       "Bash(find state/redux -name \"api.ts\" -exec sh -c 'echo \"\"===== $1 =====\"\"; cat \"\"$1\"\"' _ {} ;)",
       "Bash(find:*)",
-      "Bash(npm ls:*)"
+      "Bash(npm ls:*)",
+      "Bash(cmd /c \"rename \"\"app\\\\\\(public\\)\\\\municipalidad\"\" gobierno\")"
     ]
   }
 }

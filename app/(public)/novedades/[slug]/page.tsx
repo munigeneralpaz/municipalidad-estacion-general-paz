@@ -96,7 +96,7 @@ const NewsDetailPage = () => {
 
   return (
     <Box>
-      <PageHero title={currentNews.title} subtitle={currentNews.excerpt || undefined} />
+      <PageHero title={currentNews.title} subtitle={currentNews.excerpt || undefined} overlayColor="rgba(46,134,193,0.88)" overlayColorEnd="rgba(67,160,71,0.72)" />
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
       <AnimatedSection animation="fadeInUp">
       {/* Breadcrumbs */}

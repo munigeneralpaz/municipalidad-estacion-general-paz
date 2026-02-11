@@ -19,6 +19,7 @@ const servicesSlice = createSlice({
         cultura: [],
         deporte: [],
         tramites: [],
+        educacion: [],
       };
       state.currentService = null;
       state.lastFetched = {};
