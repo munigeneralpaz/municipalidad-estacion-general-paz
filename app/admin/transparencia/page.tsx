@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
   Box,
@@ -24,6 +24,10 @@ import {
   DialogActions,
   Skeleton,
   CircularProgress,
+  TextField,
+  Select,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -43,10 +47,22 @@ const TransparenciaListPage = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [search, setSearch] = useState('');
+  const [typeFilter, setTypeFilter] = useState('all');
+  const [categoryFilter, setCategoryFilter] = useState('all');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedRegulation, setSelectedRegulation] = useState<Regulation | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const filteredRegulations = useMemo(() => {
+    return regulations.filter((reg) => {
+      const matchesSearch = !search || reg.title.toLowerCase().includes(search.toLowerCase()) || String(reg.regulation_number).includes(search);
+      const matchesType = typeFilter === 'all' || reg.type === typeFilter;
+      const matchesCategory = categoryFilter === 'all' || reg.category === categoryFilter;
+      return matchesSearch && matchesType && matchesCategory;
+    });
+  }, [regulations, search, typeFilter, categoryFilter]);
 
   useEffect(() => {
     dispatch(getRegulationsAsync({ page: page + 1, limit: rowsPerPage }));
@@ -107,6 +123,42 @@ const TransparenciaListPage = () => {
         </Button>
       </Box>
 
+      <Box sx={{ display: 'flex', gap: 2, mb: 2, flexWrap: 'wrap' }}>
+        <TextField
+          size="small"
+          placeholder="Buscar por título o número..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          sx={{ flex: 1, minWidth: 200, maxWidth: 400 }}
+        />
+        <FormControl size="small" sx={{ minWidth: 160 }}>
+          <InputLabel>Tipo</InputLabel>
+          <Select
+            value={typeFilter}
+            label="Tipo"
+            onChange={(e) => setTypeFilter(e.target.value)}
+          >
+            <MenuItem value="all">Todos</MenuItem>
+            {REGULATION_TYPES.map((type) => (
+              <MenuItem key={type.value} value={type.value}>{type.label}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl size="small" sx={{ minWidth: 160 }}>
+          <InputLabel>Categoría</InputLabel>
+          <Select
+            value={categoryFilter}
+            label="Categoría"
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            <MenuItem value="all">Todas</MenuItem>
+            {REGULATION_CATEGORIES.map((cat) => (
+              <MenuItem key={cat.value} value={cat.value}>{cat.label}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+
       <Paper sx={{ borderRadius: 3, overflow: 'hidden' }}>
         <TableContainer>
           <Table>
@@ -132,7 +184,14 @@ const TransparenciaListPage = () => {
                     <TableCell><Skeleton width={40} /></TableCell>
                   </TableRow>
                 ))
-                : regulations.map((regulation) => (
+                : filteredRegulations.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
+                        <Typography color="text.secondary">No se encontraron normativas</Typography>
+                      </TableCell>
+                    </TableRow>
+                  )
+                : filteredRegulations.map((regulation) => (
                   <TableRow key={regulation.id} hover>
                     <TableCell>
                       <Typography variant="body2" sx={{ fontWeight: 600 }}>

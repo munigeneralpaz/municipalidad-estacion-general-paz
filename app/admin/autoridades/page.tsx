@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
   Box,
@@ -24,6 +24,10 @@ import {
   DialogActions,
   Skeleton,
   CircularProgress,
+  TextField,
+  Select,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -40,10 +44,20 @@ const AutoridadesListPage = () => {
   const dispatch = useAppDispatch();
   const { authorities, status } = useAppSelector((state) => state.authorities);
 
+  const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('all');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedAuthority, setSelectedAuthority] = useState<Authority | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const filteredAuthorities = useMemo(() => {
+    return authorities.filter((authority) => {
+      const matchesSearch = !search || authority.full_name.toLowerCase().includes(search.toLowerCase()) || authority.position.toLowerCase().includes(search.toLowerCase());
+      const matchesCategory = categoryFilter === 'all' || authority.category === categoryFilter;
+      return matchesSearch && matchesCategory;
+    });
+  }, [authorities, search, categoryFilter]);
 
   useEffect(() => {
     dispatch(getAuthoritiesAsync());
@@ -99,6 +113,29 @@ const AutoridadesListPage = () => {
         </Button>
       </Box>
 
+      <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+        <TextField
+          size="small"
+          placeholder="Buscar por nombre o cargo..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          sx={{ flex: 1, maxWidth: 400 }}
+        />
+        <FormControl size="small" sx={{ minWidth: 180 }}>
+          <InputLabel>Categoría</InputLabel>
+          <Select
+            value={categoryFilter}
+            label="Categoría"
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            <MenuItem value="all">Todas</MenuItem>
+            {AUTHORITY_CATEGORIES.map((cat) => (
+              <MenuItem key={cat.value} value={cat.value}>{cat.label}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+
       <Paper sx={{ borderRadius: 3, overflow: 'hidden' }}>
         <TableContainer>
           <Table>
@@ -122,7 +159,14 @@ const AutoridadesListPage = () => {
                       <TableCell><Skeleton width={40} /></TableCell>
                     </TableRow>
                   ))
-                : authorities.map((authority) => (
+                : filteredAuthorities.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={5} align="center" sx={{ py: 4 }}>
+                        <Typography color="text.secondary">No se encontraron autoridades</Typography>
+                      </TableCell>
+                    </TableRow>
+                  )
+                : filteredAuthorities.map((authority) => (
                     <TableRow key={authority.id} hover>
                       <TableCell>
                         <Avatar src={authority.photo_url} alt={authority.full_name} />

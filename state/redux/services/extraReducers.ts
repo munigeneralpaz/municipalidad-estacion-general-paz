@@ -2,6 +2,7 @@ import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { ServicesSlice, ServiceCategory } from '@/types';
 import {
   getServicesAsync,
+  getAllServicesAsync,
   getServicesByCategoryAsync,
   getServiceByIdAsync,
   getServiceBySlugAsync,
@@ -48,6 +49,31 @@ const extraReducersServices = (
     })
     .addCase(getServicesAsync.rejected, (state, action: any) => {
       state.status.getServicesAsync = {
+        response: 'rejected',
+        message: action.payload?.error || 'Error al obtener servicios',
+        loading: false,
+      };
+    });
+
+  // GET ALL SERVICES (admin - sin filtro is_active)
+  builder
+    .addCase(getAllServicesAsync.pending, (state) => {
+      state.status.getAllServicesAsync = {
+        response: 'pending',
+        message: '',
+        loading: true,
+      };
+    })
+    .addCase(getAllServicesAsync.fulfilled, (state, action) => {
+      state.services = action.payload;
+      state.status.getAllServicesAsync = {
+        response: 'fulfilled',
+        message: '',
+        loading: false,
+      };
+    })
+    .addCase(getAllServicesAsync.rejected, (state, action: any) => {
+      state.status.getAllServicesAsync = {
         response: 'rejected',
         message: action.payload?.error || 'Error al obtener servicios',
         loading: false,

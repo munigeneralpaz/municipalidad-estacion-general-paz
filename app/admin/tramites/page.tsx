@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
   Box,
@@ -24,6 +24,10 @@ import {
   DialogActions,
   Skeleton,
   CircularProgress,
+  TextField,
+  Select,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -42,10 +46,20 @@ const TramitesListPage = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [search, setSearch] = useState('');
+  const [contentTypeFilter, setContentTypeFilter] = useState('all');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedTramite, setSelectedTramite] = useState<Tramite | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const filteredTramites = useMemo(() => {
+    return tramites.filter((tramite) => {
+      const matchesSearch = !search || tramite.title.toLowerCase().includes(search.toLowerCase());
+      const matchesType = contentTypeFilter === 'all' || tramite.content_type === contentTypeFilter;
+      return matchesSearch && matchesType;
+    });
+  }, [tramites, search, contentTypeFilter]);
 
   useEffect(() => {
     dispatch(getTramitesAsync({ page: page + 1, limit: rowsPerPage }));
@@ -106,6 +120,28 @@ const TramitesListPage = () => {
         </Button>
       </Box>
 
+      <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+        <TextField
+          size="small"
+          placeholder="Buscar por título..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          sx={{ flex: 1, maxWidth: 400 }}
+        />
+        <FormControl size="small" sx={{ minWidth: 180 }}>
+          <InputLabel>Tipo de contenido</InputLabel>
+          <Select
+            value={contentTypeFilter}
+            label="Tipo de contenido"
+            onChange={(e) => setContentTypeFilter(e.target.value)}
+          >
+            <MenuItem value="all">Todos</MenuItem>
+            <MenuItem value="pdf">PDF</MenuItem>
+            <MenuItem value="texto">Texto</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+
       <Paper sx={{ borderRadius: 3, overflow: 'hidden' }}>
         <TableContainer>
           <Table>
@@ -129,7 +165,14 @@ const TramitesListPage = () => {
                       <TableCell><Skeleton width={40} /></TableCell>
                     </TableRow>
                   ))
-                : tramites.map((tramite) => (
+                : filteredTramites.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={5} align="center" sx={{ py: 4 }}>
+                        <Typography color="text.secondary">No se encontraron trámites</Typography>
+                      </TableCell>
+                    </TableRow>
+                  )
+                : filteredTramites.map((tramite) => (
                     <TableRow key={tramite.id} hover>
                       <TableCell>
                         <Typography variant="body2" sx={{ fontWeight: 500 }}>

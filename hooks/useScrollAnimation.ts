@@ -22,6 +22,13 @@ export const useScrollAnimation = (options: ScrollAnimationOptions = {}) => {
     const element = ref.current;
     if (!element) return;
 
+    // Check if element is already in viewport on mount
+    const rect = element.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setIsVisible(true);
+      if (triggerOnce) return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

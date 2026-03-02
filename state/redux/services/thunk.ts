@@ -3,6 +3,7 @@ import { ServiceFormData, ServiceCategory } from '@/types';
 import { translateError } from '@/utils/translateError';
 import {
   getServicesApi,
+  getAllServicesApi,
   getServicesByCategoryApi,
   getServiceByIdApi,
   getServiceBySlugApi,
@@ -18,6 +19,19 @@ export const getServicesAsync = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       return await getServicesApi();
+    } catch (error: any) {
+      return rejectWithValue({
+        error: translateError(error, 'Error al obtener servicios'),
+      });
+    }
+  }
+);
+
+export const getAllServicesAsync = createAsyncThunk(
+  'services/getAllServices',
+  async (_, { rejectWithValue }) => {
+    try {
+      return await getAllServicesApi();
     } catch (error: any) {
       return rejectWithValue({
         error: translateError(error, 'Error al obtener servicios'),

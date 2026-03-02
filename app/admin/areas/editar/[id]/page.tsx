@@ -133,7 +133,7 @@ const EditarAreaPage = () => {
     dispatch(updateServiceAsync({ id, data: serviceData }));
   };
 
-  const loadingGet = status.getServiceByIdAsync?.loading;
+  const loadingGet = status.getServiceByIdAsync?.loading || (!currentService && !status.getServiceByIdAsync?.response);
   const loadingUpdate = status.updateServiceAsync?.loading;
   const error = status.updateServiceAsync?.response === 'rejected';
   const errorMessage = status.updateServiceAsync?.message;
@@ -215,6 +215,7 @@ const EditarAreaPage = () => {
                   render={({ field }) => (
                     <TextField
                       {...field}
+                      value={field.value ?? ''}
                       select
                       label="Categoría"
                       fullWidth

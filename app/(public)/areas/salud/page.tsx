@@ -64,7 +64,7 @@ const SaludPage = () => {
   const resena = resenas?.salud;
 
   const services = servicesByCategory.salud;
-  const loading = status.getServicesByCategoryAsync?.loading;
+  const loading = status.getServicesByCategoryAsync?.loading || (!services.length && !status.getServicesByCategoryAsync?.response);
   const error = status.getServicesByCategoryAsync?.response === 'rejected';
 
   if (error && !services.length) {
@@ -82,22 +82,35 @@ const SaludPage = () => {
 
   if (loading) {
     return (
-      <Container maxWidth="lg" sx={{ py: { xs: 4, md: 6 } }}>
-        <Skeleton variant="text" width="40%" height={60} sx={{ mb: 4 }} />
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 4 }}>
-          {Array.from(new Array(3)).map((_, index) => (
-            <Box key={index}>
-              <Card>
-                <CardContent>
-                  <Skeleton variant="text" width="80%" />
-                  <Skeleton variant="text" />
-                  <Skeleton variant="text" width="60%" />
+      <Box>
+        <PageHero title="Área de Salud" subtitle="Atención médica y programas de prevención para toda la comunidad" backgroundImage="/pages-hero/salud-hero.webp" overlayColor="rgba(46,134,193,0.88)" overlayColorEnd="rgba(26,95,139,0.72)" />
+        <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 4 }}>
+            {Array.from(new Array(4)).map((_, index) => (
+              <Card key={index} sx={{ height: '100%' }}>
+                <Skeleton variant="rectangular" height={180} animation="wave" />
+                <CardContent sx={{ p: 3 }}>
+                  <Skeleton variant="text" width="65%" height={32} sx={{ mb: 1 }} animation="wave" />
+                  <Skeleton variant="text" width="100%" animation="wave" />
+                  <Skeleton variant="text" width="90%" animation="wave" />
+                  <Skeleton variant="text" width="40%" sx={{ mb: 2 }} animation="wave" />
+                  <Paper variant="outlined" sx={{ p: 2, mt: 1, backgroundColor: 'grey.50' }}>
+                    <Skeleton variant="text" width="50%" height={20} sx={{ mb: 1 }} animation="wave" />
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
+                      <Skeleton variant="circular" width={18} height={18} sx={{ mr: 1 }} animation="wave" />
+                      <Skeleton variant="text" width="40%" animation="wave" />
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Skeleton variant="circular" width={18} height={18} sx={{ mr: 1 }} animation="wave" />
+                      <Skeleton variant="text" width="55%" animation="wave" />
+                    </Box>
+                  </Paper>
                 </CardContent>
               </Card>
-            </Box>
-          ))}
-        </Box>
-      </Container>
+            ))}
+          </Box>
+        </Container>
+      </Box>
     );
   }
 

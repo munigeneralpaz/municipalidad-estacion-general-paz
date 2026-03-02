@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
   Box,
@@ -23,6 +23,7 @@ import {
   DialogActions,
   Skeleton,
   CircularProgress,
+  TextField,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -32,7 +33,7 @@ import {
   Description as DescriptionIcon,
 } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '@/state/redux/store';
-import { getServicesAsync, deleteServiceAsync } from '@/state/redux/services';
+import { getAllServicesAsync, deleteServiceAsync } from '@/state/redux/services';
 import { ADMIN_ROUTES, SERVICE_CATEGORIES } from '@/constants';
 import { Service } from '@/types';
 
@@ -44,10 +45,20 @@ const AreasListPage = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('all');
 
   useEffect(() => {
-    dispatch(getServicesAsync());
+    dispatch(getAllServicesAsync());
   }, [dispatch]);
+
+  const filteredServices = useMemo(() => {
+    return services.filter((service) => {
+      const matchesSearch = !search || service.title.toLowerCase().includes(search.toLowerCase());
+      const matchesCategory = categoryFilter === 'all' || service.category === categoryFilter;
+      return matchesSearch && matchesCategory;
+    });
+  }, [services, search, categoryFilter]);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>, service: Service) => {
     setAnchorEl(event.currentTarget);
@@ -81,7 +92,7 @@ const AreasListPage = () => {
     return SERVICE_CATEGORIES.find((c) => c.value === category)?.label || category;
   };
 
-  const loading = status.getServicesAsync?.loading;
+  const loading = status.getAllServicesAsync?.loading;
 
   return (
     <Box>
@@ -109,6 +120,34 @@ const AreasListPage = () => {
         </Box>
       </Box>
 
+      <Box sx={{ display: 'flex', gap: 2, mb: 3, flexDirection: { xs: 'column', sm: 'row' } }}>
+        <TextField
+          label="Buscar"
+          variant="outlined"
+          size="small"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Buscar por título..."
+          sx={{ flex: 1 }}
+        />
+        <TextField
+          select
+          label="Categoría"
+          variant="outlined"
+          size="small"
+          value={categoryFilter}
+          onChange={(e) => setCategoryFilter(e.target.value)}
+          sx={{ minWidth: 200 }}
+        >
+          <MenuItem value="all">Todas las categorías</MenuItem>
+          {SERVICE_CATEGORIES.map((cat) => (
+            <MenuItem key={cat.value} value={cat.value}>
+              {cat.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Box>
+
       <Paper sx={{ borderRadius: 3, overflow: 'hidden' }}>
         <TableContainer>
           <Table>
@@ -130,7 +169,15 @@ const AreasListPage = () => {
                       <TableCell><Skeleton width={40} /></TableCell>
                     </TableRow>
                   ))
-                : services.map((service) => (
+                : filteredServices.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={4} sx={{ textAlign: 'center', py: 4 }}>
+                        <Typography variant="body2" color="text.secondary">
+                          No se encontraron áreas con los filtros aplicados
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  ) : filteredServices.map((service) => (
                     <TableRow key={service.id} hover>
                       <TableCell>
                         <Typography variant="body2" sx={{ fontWeight: 500 }}>

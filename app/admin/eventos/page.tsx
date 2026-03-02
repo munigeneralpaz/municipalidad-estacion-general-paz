@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
   Box,
@@ -23,6 +23,10 @@ import {
   DialogActions,
   Skeleton,
   CircularProgress,
+  TextField,
+  Select,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -39,10 +43,20 @@ const EventosListPage = () => {
   const dispatch = useAppDispatch();
   const { events, status } = useAppSelector((state) => state.events);
 
+  const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('all');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const filteredEvents = useMemo(() => {
+    return events.filter((ev) => {
+      const matchesSearch = !search || ev.title.toLowerCase().includes(search.toLowerCase());
+      const matchesCategory = categoryFilter === 'all' || ev.category === categoryFilter;
+      return matchesSearch && matchesCategory;
+    });
+  }, [events, search, categoryFilter]);
 
   useEffect(() => {
     dispatch(getEventsAsync({ page: 1, limit: 50 }));
@@ -122,6 +136,29 @@ const EventosListPage = () => {
         </Button>
       </Box>
 
+      <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+        <TextField
+          size="small"
+          placeholder="Buscar por título..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          sx={{ flex: 1, maxWidth: 400 }}
+        />
+        <FormControl size="small" sx={{ minWidth: 180 }}>
+          <InputLabel>Categoría</InputLabel>
+          <Select
+            value={categoryFilter}
+            label="Categoría"
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            <MenuItem value="all">Todas</MenuItem>
+            {EVENT_CATEGORIES.map((cat) => (
+              <MenuItem key={cat.value} value={cat.value}>{cat.label}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+
       <Paper sx={{ borderRadius: 3, overflow: 'hidden' }}>
         <TableContainer>
           <Table>
@@ -147,7 +184,14 @@ const EventosListPage = () => {
                       <TableCell><Skeleton width={40} /></TableCell>
                     </TableRow>
                   ))
-                : events.map((ev) => (
+                : filteredEvents.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
+                        <Typography color="text.secondary">No se encontraron eventos</Typography>
+                      </TableCell>
+                    </TableRow>
+                  )
+                : filteredEvents.map((ev) => (
                     <TableRow key={ev.id} hover>
                       <TableCell>
                         <Typography variant="body2" sx={{ fontWeight: 500 }}>

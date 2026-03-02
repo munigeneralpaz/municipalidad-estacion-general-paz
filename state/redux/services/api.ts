@@ -3,7 +3,7 @@ import { supabase } from '@/state/supabase/config';
 import { ServiceFormData, ServiceCategory, AreaResena } from '@/types';
 
 /**
- * Obtener todos los servicios
+ * Obtener todos los servicios (solo activos, para público)
  * GET /api/services
  */
 export const getServicesApi = async () => {
@@ -11,6 +11,19 @@ export const getServicesApi = async () => {
     .from('services')
     .select('*')
     .eq('is_active', true)
+    .order('order_position', { ascending: true });
+
+  if (error) throw error;
+  return data || [];
+};
+
+/**
+ * Obtener todos los servicios sin filtro (para admin)
+ */
+export const getAllServicesApi = async () => {
+  const { data, error } = await supabase
+    .from('services')
+    .select('*')
     .order('order_position', { ascending: true });
 
   if (error) throw error;

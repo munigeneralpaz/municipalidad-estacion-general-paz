@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import {
   Box,
@@ -30,8 +30,17 @@ import AnimatedSection from '../components/AnimatedSection';
 
 const NovedadesPage = () => {
   const dispatch = useAppDispatch();
-  const { newsList, pagination, filters, status } = useAppSelector(
+  const { newsList: rawNewsList, pagination, filters, status } = useAppSelector(
     (state) => state.news
+  );
+  const newsList = useMemo(
+    () =>
+      [...rawNewsList].sort(
+        (a, b) =>
+          new Date(b.published_at || b.created_at).getTime() -
+          new Date(a.published_at || a.created_at).getTime(),
+      ),
+    [rawNewsList],
   );
 
   const { page, setPage } = usePagination({ initialPage: 1, initialLimit: 9 });

@@ -14,7 +14,7 @@ export const SERVICES = [
     description: 'Accede a Área de salud municipal',
     href: PUBLIC_ROUTES.SERVICIOS_SALUD,
     color: '#2E86C1',
-    image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80',
+    image: '/pages-hero/salud-hero.webp',
   },
   {
     title: 'Cultura y Deporte',
@@ -22,7 +22,7 @@ export const SERVICES = [
     description: 'Eventos, actividades culturales y deportivas',
     href: PUBLIC_ROUTES.SERVICIOS_CULTURA,
     color: '#B52A1C',
-    image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&q=80',
+    image: '/pages-hero/cultura-y-deporte-hero.webp',
   },
   {
     title: 'Obra e infraestructura',
@@ -30,7 +30,7 @@ export const SERVICES = [
     description: 'Obras e infraestructura municipal',
     href: PUBLIC_ROUTES.SERVICIOS_OBRAS,
     color: '#F5A623',
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80',
+    image: '/pages-hero/obra-e-infraestructura-hero.webp',
   },
   {
     title: 'Educación',
@@ -38,7 +38,7 @@ export const SERVICES = [
     description: 'Programas educativos municipales',
     href: PUBLIC_ROUTES.SERVICIOS_EDUCACION,
     color: '#1A5F8B',
-    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80',
+    image: '/pages-hero/educacion-hero.webp',
   },
   {
     title: 'Registro Civil',
@@ -46,6 +46,6 @@ export const SERVICES = [
     description: 'Trámites y servicios del Registro Civil',
     href: PUBLIC_ROUTES.SERVICIOS_REGISTRO,
     color: '#2E7D32',
-    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80',
+    image: '/pages-hero/registro-civil-hero.webp',
   },
 ] as const;

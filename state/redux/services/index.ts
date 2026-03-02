@@ -50,6 +50,7 @@ export default servicesSlice.reducer;
 // Re-export thunks
 export {
   getServicesAsync,
+  getAllServicesAsync,
   getServicesByCategoryAsync,
   getServiceByIdAsync,
   getServiceBySlugAsync,

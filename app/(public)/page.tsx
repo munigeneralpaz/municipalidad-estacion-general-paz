@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -54,19 +55,19 @@ const heroSlides = [
     overlayColor: 'rgba(67, 160, 71, 0.82)',
     overlayColorEnd: 'rgba(46, 134, 193, 0.7)',
   },
-  {
-    id: '3',
-    title: 'Transparencia y Compromiso',
-    subtitle: 'Consultá normativas, ordenanzas y toda la información institucional de nuestro municipio.',
-    ctaText: 'Ver Transparencia',
-    ctaHref: PUBLIC_ROUTES.TRANSPARENCIA,
-    overlayColor: 'rgba(181, 42, 28, 0.82)',
-    overlayColorEnd: 'rgba(245, 166, 35, 0.65)',
-  },
 ];
 
 const HomePage = () => {
-  const { featuredNews, status: newsStatus } = useAppSelector((state) => state.news);
+  const { featuredNews: rawFeaturedNews, status: newsStatus } = useAppSelector((state) => state.news);
+  const featuredNews = useMemo(
+    () =>
+      [...rawFeaturedNews].sort(
+        (a, b) =>
+          new Date(b.published_at || b.created_at).getTime() -
+          new Date(a.published_at || a.created_at).getTime(),
+      ),
+    [rawFeaturedNews],
+  );
   const { featuredEvents, status: eventsStatus } = useAppSelector((state) => state.events);
 
   useCachedFetch({
