@@ -2,11 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { Box, Container, Typography, Button, IconButton } from '@mui/material';
-import {
-  ChevronLeft as ChevronLeftIcon,
-  ChevronRight as ChevronRightIcon,
-} from '@mui/icons-material';
+import { Box, Container, Typography, Button } from '@mui/material';
 
 type HeroSlide = {
   id: string;
@@ -42,10 +38,6 @@ const HeroCarousel = ({
 
   const nextSlide = useCallback(() => {
     setActiveSlide((prev) => (prev + 1) % slides.length);
-  }, [slides.length]);
-
-  const prevSlide = useCallback(() => {
-    setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length);
   }, [slides.length]);
 
   useEffect(() => {
@@ -226,51 +218,7 @@ const HeroCarousel = ({
         </Box>
       ))}
 
-      {/* Navigation Arrows */}
-      {slides.length > 1 && (
-        <>
-          <IconButton
-            onClick={prevSlide}
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              left: { xs: 8, md: 24 },
-              zIndex: 3,
-              color: 'white',
-              backgroundColor: 'rgba(255,255,255,0.12)',
-              backdropFilter: 'blur(4px)',
-              '&:hover': {
-                backgroundColor: 'rgba(255,255,255,0.25)',
-              },
-            }}
-            aria-label="Slide anterior"
-          >
-            <ChevronLeftIcon sx={{ fontSize: 32 }} />
-          </IconButton>
-          <IconButton
-            onClick={nextSlide}
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              right: { xs: 8, md: 24 },
-              zIndex: 3,
-              color: 'white',
-              backgroundColor: 'rgba(255,255,255,0.12)',
-              backdropFilter: 'blur(4px)',
-              '&:hover': {
-                backgroundColor: 'rgba(255,255,255,0.25)',
-              },
-            }}
-            aria-label="Siguiente slide"
-          >
-            <ChevronRightIcon sx={{ fontSize: 32 }} />
-          </IconButton>
-        </>
-      )}
-
-      {/* Dots */}
+      {/* Slide indicators */}
       {slides.length > 1 && (
         <Box
           sx={{
@@ -279,8 +227,13 @@ const HeroCarousel = ({
             left: '50%',
             transform: 'translateX(-50%)',
             display: 'flex',
-            gap: 1,
+            gap: 1.5,
             zIndex: 3,
+            backgroundColor: 'rgba(0,0,0,0.25)',
+            backdropFilter: 'blur(8px)',
+            borderRadius: '50px',
+            px: 2,
+            py: 1,
           }}
         >
           {slides.map((_, index) => (
@@ -290,17 +243,20 @@ const HeroCarousel = ({
               onClick={() => setActiveSlide(index)}
               aria-label={`Ir a slide ${index + 1}`}
               sx={{
-                width: index === activeSlide ? 32 : 12,
-                height: 12,
-                borderRadius: '6px',
-                backgroundColor: index === activeSlide ? '#FDD835' : 'rgba(255,255,255,0.4)',
-                border: 'none',
+                width: index === activeSlide ? 36 : 14,
+                height: 14,
+                borderRadius: '7px',
+                backgroundColor: index === activeSlide ? '#FDD835' : 'rgba(255,255,255,0.45)',
+                border: '2px solid',
+                borderColor: index === activeSlide ? '#FDD835' : 'rgba(255,255,255,0.3)',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
                 p: 0,
                 minWidth: 0,
+                boxShadow: index === activeSlide ? '0 0 10px rgba(253,216,53,0.5)' : 'none',
                 '&:hover': {
-                  backgroundColor: index === activeSlide ? '#FDD835' : 'rgba(255,255,255,0.6)',
+                  backgroundColor: index === activeSlide ? '#FFEE58' : 'rgba(255,255,255,0.7)',
+                  transform: 'scale(1.2)',
                 },
               }}
             />

@@ -40,7 +40,7 @@ const heroSlides = [
   {
     id: '1',
     title: 'Bienvenidos a Estación General Paz',
-    subtitle: 'Trabajando juntos por una ciudad mejor. Accedé a todos los servicios municipales desde un solo lugar.',
+    subtitle: 'Trabajando juntos por un municipio mejor. Accedé a todos los servicios desde un solo lugar.',
     ctaText: 'Ver Novedades',
     ctaHref: PUBLIC_ROUTES.NOVEDADES,
     overlayColor: 'rgba(26, 95, 139, 0.85)',

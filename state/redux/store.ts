@@ -25,7 +25,7 @@ import tramitesReducer from './tramites';
 // datos persistidos (ej: renombrar categorías, cambiar estructura de slices).
 // Redux Persist comparará la versión almacenada con la actual.
 // Si no coinciden, `migrate` descarta todo y devuelve undefined (purge limpio).
-const PERSIST_VERSION = 5;
+const PERSIST_VERSION = 6;
 
 const persistConfig = {
   key: 'root',
