@@ -113,7 +113,7 @@ const Footer = () => {
                   variant="body2"
                   sx={{ opacity: 0.8, wordBreak: 'break-word' }}
                 >
-                  municipiogpaz@gmail.com
+                  municipalidadestgeneralpaz@gmail.com
                 </Typography>
               </Box>
             </Box>

@@ -218,7 +218,7 @@ const ContactoPage = () => {
                       Email
                     </Typography>
                     <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                      municipiogpaz@gmail.com
+                      municipalidadestgeneralpaz@gmail.com
                     </Typography>
                   </Box>
                 </Box>
